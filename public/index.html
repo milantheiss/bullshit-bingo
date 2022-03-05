@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title>JavaScript Bingo</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+</head>
+<body onload="init()">
+<div id="container">
+    <!--<h1 id="header">Bullshit Bingo</h1>-->
+    <div class="select-wrapper">
+        <select id="select" name="select-account" onclick="loadBoard(false)"></select>
+    </div>
+
+    <table id="bingotable">
+        <tr>
+            <td id="square0" onclick="toggleColor(this, 0)">&nbsp;</td>
+            <td id="square1" onclick="toggleColor(this, 1)">&nbsp;</td>
+            <td id="square2" onclick="toggleColor(this, 2)">&nbsp;</td>
+            <td id="square3" onclick="toggleColor(this, 3)">&nbsp;</td>
+        </tr>
+        <tr>
+            <td id="square4" onclick="toggleColor(this, 4)">&nbsp;</td>
+            <td id="square5" onclick="toggleColor(this, 5)">&nbsp;</td>
+            <td id="square6" onclick="toggleColor(this, 6)">&nbsp;</td>
+            <td id="square7" onclick="toggleColor(this, 7)">&nbsp;</td>
+        </tr>
+        <tr>
+            <td id="square8" onclick="toggleColor(this, 8)">&nbsp;</td>
+            <td id="square9" onclick="toggleColor(this, 9)">&nbsp;</td>
+            <td id="square10" onclick="toggleColor(this, 10)"></td>
+            <td id="square11" onclick="toggleColor(this, 11)">&nbsp;</td>
+        </tr>
+        <tr>
+            <td id="square12" onclick="toggleColor(this, 12)">&nbsp;</td>
+            <td id="square13" onclick="toggleColor(this, 13)">&nbsp;</td>
+            <td id="square14" onclick="toggleColor(this, 14)">&nbsp;</td>
+            <td id="square15" onclick="toggleColor(this, 15)">&nbsp;</td>
+        </tr>
+    </table>
+    <p>
+        <span class="click-me" onclick="loadBoard(true)">Hier klicke</span> um neues Board zu laden</p>
+</div>
+</body>
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        font-size: 150%;
+        background: #1abc9c;
+    }
+
+    #container {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translateY(-50%) translateX(-50%);
+        transform: translateY(-50%) translateX(-50%);
+    }
+
+    #select {
+        padding: 5px;
+        position: absolute;
+        left: 50%;
+        top: -5%;
+        -ms-transform: translateY(-50%) translateX(-50%);
+        transform: translateY(-50%) translateX(-50%);
+    }
+
+    .pickedBG {
+        background-color: LightCoral;
+    }
+
+    select {
+        font-weight: 600;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        text-align: center;
+        border: none;
+        padding-right: 15px;
+        width: 40%;
+        height: 7%;
+        font-size: 150%;
+        color: #f1c40f;
+        background: #1abc9c url("./downarrow.png") no-repeat calc(100% - 5px) center;
+        background-size: 25px;
+    }
+
+
+    p {
+        font-weight: 600;
+        margin: 0 auto;
+        text-align: center;
+        padding: 30px;
+        color: white;
+    }
+
+    .click-me {
+        text-decoration: none;
+        color: #f1c40f;
+    }
+
+    .click-me:hover {
+        cursor: pointer;
+    }
+
+    #bingotable {
+        margin: 0 auto;
+        text-align: center;
+        width: 600px;
+        height: 600px;
+        border-collapse: collapse;
+        background: white;
+        table-layout: fixed;
+    }
+
+    td {
+        border: 3px solid black;
+        width: 150px;
+        height: 150px;
+        text-align: center;
+        padding: 10px;
+    }
+
+    @media (max-width: 1000px) {
+        body {
+            font-size: 80%;
+        }
+
+        #bingotable {
+            margin: 0 auto;
+            text-align: center;
+            width: 80vw;
+            height: 80vw;
+            border-collapse: collapse;
+            background: white;
+            table-layout: fixed;
+        }
+
+        td {
+            border: 3px solid black;
+            width: 25%;
+            height: 25%;
+            text-align: center;
+            padding: 10px;
+        }
+
+        select {
+            font-weight: 600;
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            text-align: center;
+            border: none;
+            padding-right: 15px;
+            width: 40%;
+            height: 7%;
+            font-size: 150%;
+            color: #f1c40f;
+            background: #1abc9c url("./downarrow.png") no-repeat calc(100% + 2px) center;
+            background-size: 18px;
+        }
+    }
+</style>
+<script>
+    let selectedBoardData
+
+    async function init() {
+        await loadAccounts()
+    }
+
+    async function loadAccounts() {
+        fetch('/getAccounts', {
+            method: 'POST'
+        }).then(accounts => accounts.json())
+            .then(accounts => {
+                document.getElementById('select').value = accounts[0]
+                console.log(document.getElementById('select').value)
+                for (let i = 0; i < accounts.length; i++) {
+                    const opt = document.createElement('option')
+                    opt.value = accounts[i]
+                    opt.innerHTML = accounts[i]
+                    document.getElementById('select').append(opt)
+                }
+            }).then(promise => loadBoard(false))
+    }
+
+    async function loadBoard(newBoard) {
+        const selectedAccount = document.getElementById('select').value
+        console.log(selectedAccount)
+        let response = await fetch('/getBoard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({target: selectedAccount, shuffleBoard: newBoard})
+        })
+        selectedBoardData = await response.json()
+        setSquare(selectedBoardData)
+    }
+
+    function setSquare(board) {
+        for (let i = 0; i < 16; i++) {
+            const currSquare = "square" + i;
+            const squareData = board['squares'].find(item => item['square'] == i)
+            document.getElementById(currSquare).innerHTML = squareData['text'];
+            if (squareData['checked'] === true) {
+                document.getElementById(currSquare).className = "pickedBG";
+            } else if (squareData['checked'] === false) {
+                document.getElementById(currSquare).className = "";
+            }
+
+        }
+    }
+
+    function toggleColor(evt, index) {
+        //TODO Callback implementieren
+        if (evt.target) {
+            var thisSquare = evt.target;  // most browsers
+        } else {
+            var thisSquare = window.event.srcElement;  // Windows Internet Explorer
+        }
+
+        let bool
+        if (thisSquare.className === "") {
+            thisSquare.className = "pickedBG";
+            bool = true
+        } else {
+            thisSquare.className = "";
+            bool = false
+        }
+
+        if (selectedBoardData != null) {
+            fetch('/newChecked', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({name: 'Milan', square: index, checked: bool})
+            })
+        }
+
+
+    }
+</script>
+</html>

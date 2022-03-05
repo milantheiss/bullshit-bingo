@@ -1,0 +1,174 @@
+{
+  "accounts": [
+    {
+      "name": "Milan",
+      "squares": [
+        {
+          "square": 0,
+          "text": "Milan stachelt Jannik an",
+          "checked": false
+        },
+        {
+          "square": 1,
+          "text": "14",
+          "checked": true
+        },
+        {
+          "square": 2,
+          "text": "Erik sagt mehr als einen Satz",
+          "checked": false
+        },
+        {
+          "square": 3,
+          "text": "Jannik rastet aus",
+          "checked": false
+        },
+        {
+          "square": 4,
+          "text": "13",
+          "checked": false
+        },
+        {
+          "square": 5,
+          "text": "10",
+          "checked": false
+        },
+        {
+          "square": 6,
+          "text": "11",
+          "checked": false
+        },
+        {
+          "square": 7,
+          "text": "Jannik wird extrem sauer",
+          "checked": false
+        },
+        {
+          "square": 8,
+          "text": "Mazus trinkt zu viel",
+          "checked": false
+        },
+        {
+          "square": 9,
+          "text": "16",
+          "checked": false
+        },
+        {
+          "square": 10,
+          "text": "Leonhard übergibt sich",
+          "checked": false
+        },
+        {
+          "square": 11,
+          "text": "9",
+          "checked": false
+        },
+        {
+          "square": 12,
+          "text": "8",
+          "checked": false
+        },
+        {
+          "square": 13,
+          "text": "12",
+          "checked": false
+        },
+        {
+          "square": 14,
+          "text": "17",
+          "checked": false
+        },
+        {
+          "square": 15,
+          "text": "Anika bleibt nur eine Stunde",
+          "checked": true
+        }
+      ]
+    },
+    {
+      "name": "Noah",
+      "squares": [
+        {
+          "square": 0,
+          "text": "Jan macht Handstand",
+          "checked": false
+        },
+        {
+          "square": 1,
+          "text": "Erik sagt mehr als einen Satz",
+          "checked": false
+        },
+        {
+          "square": 2,
+          "text": "Leonhard übergibt sich",
+          "checked": false
+        },
+        {
+          "square": 3,
+          "text": "Jannik rastet aus",
+          "checked": false
+        },
+        {
+          "square": 4,
+          "text": "Anika bleibt nur eine Stunde",
+          "checked": false
+        },
+        {
+          "square": 5,
+          "text": "Mazus trinkt zu viel",
+          "checked": false
+        },
+        {
+          "square": 6,
+          "text": "16",
+          "checked": false
+        },
+        {
+          "square": 7,
+          "text": "15",
+          "checked": false
+        },
+        {
+          "square": 8,
+          "text": "13",
+          "checked": false
+        },
+        {
+          "square": 9,
+          "text": "11",
+          "checked": false
+        },
+        {
+          "square": 10,
+          "text": "Jannik wird extrem sauer",
+          "checked": false
+        },
+        {
+          "square": 11,
+          "text": "Milan stachelt Jannik an",
+          "checked": false
+        },
+        {
+          "square": 12,
+          "text": "Politische Diskussion",
+          "checked": false
+        },
+        {
+          "square": 13,
+          "text": "14",
+          "checked": false
+        },
+        {
+          "square": 14,
+          "text": "17",
+          "checked": false
+        },
+        {
+          "square": 15,
+          "text": "Phillip sagt oft Kindergeburtstag",
+          "checked": false
+        }
+      ]
+    }
+  ]
+}
